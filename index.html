@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -58,6 +58,18 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* Iframe overlay to prevent mobile scroll locking */
+        .iframe-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 20;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+        .iframe-container:hover .iframe-overlay {
+            pointer-events: none; /* Allows interaction on hover */
+        }
     </style>
 </head>
 <body>
@@ -67,13 +79,15 @@
         const { useState, useEffect } = React;
         const { motion, AnimatePresence } = window.Motion;
 
-        // --- 🧩 SVG Icons Components (No external dependencies needed) ---
+        // --- 🧩 SVG Icons Components ---
         const IconSparkles = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>;
         const IconArrowRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
         const IconChevronRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>;
         const IconGithub = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>;
         const IconMail = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
         const IconActivity = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>;
+        const IconExternalLink = () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>;
+        const IconCheckCircle = () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
 
         // ==========================================
         // 🚀 MAIN APPLICATION COMPONENT
@@ -178,47 +192,80 @@
                         {/* 🏆 2. PROJECT SHOWCASE (Startup Level) */}
                         <section id="projects" className="py-24 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
                             <div className="mb-16 md:mb-24">
-                                <h2 className="text-sm font-mono text-neonPurple mb-3 uppercase tracking-widest">Case Studies</h2>
+                                <h2 className="text-sm font-mono text-neonPurple mb-3 uppercase tracking-widest">Case Studies & Live Previews</h2>
                                 <h3 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Proven Innovations.</h3>
                             </div>
 
-                            <div className="space-y-24 md:space-y-40">
+                            <div className="space-y-32 md:space-y-48">
+                                
+                                {/* 🚀 Project 1: MotionZync */}
                                 <ProjectCaseStudy 
                                     index="01"
                                     title="MotionZync"
                                     type="Animation Engine & Sandbox"
-                                    description="A real-time CSS/JS sandbox engineered with a built-in futuristic animation engine. Designed specifically for elite frontend developers to craft and sync complex UI motions."
-                                    techStack={['React', 'Framer Motion', 'WebWorker', 'Tailwind']}
+                                    url="https://motion-zync.vercel.app"
+                                    description="A high-performance CSS/JS sandbox engineered with a built-in futuristic animation engine. Designed specifically for elite frontend developers to craft, test, and sync complex UI motions in a zero-latency environment."
+                                    features={[
+                                        "Real-time DOM rendering and execution.",
+                                        "Integrated Framer Motion & GSAP physics.",
+                                        "State-of-the-art Glassmorphism UI.",
+                                        "Memory-optimized for low-end devices."
+                                    ]}
+                                    techStack={['React', 'Framer Motion', 'WebWorker', 'Tailwind CSS']}
                                     metrics={['60fps Smooth Rendering', 'Zero-Lag Execution']}
                                     gradient="from-blue-600/20 via-cyan-500/10"
                                 />
 
+                                {/* 🧠 Project 2: Vaidya Guru */}
                                 <ProjectCaseStudy 
                                     index="02"
                                     title="Vaidya Guru"
                                     type="AI-Powered Medical EdTech"
-                                    description="Where ancient Ayurveda meets modern AI. A sophisticated EdTech platform for medical students featuring AI-driven study paths and intelligent doubt resolution."
+                                    url="https://vaidya-guru.vercel.app/"
+                                    description="Where ancient Ayurveda meets modern AI. A sophisticated EdTech platform for medical students featuring AI-driven study paths, intelligent doubt resolution, and premium interactive learning modules."
+                                    features={[
+                                        "Context-aware AI search for Ayurvedic scriptures.",
+                                        "Dynamic Shloka generation and translations.",
+                                        "Personalized student dashboard & progress tracking.",
+                                        "Vector-based knowledge retrieval system."
+                                    ]}
                                     techStack={['Next.js', 'OpenAI API', 'Vector DB', 'UI/UX']}
                                     metrics={['Personalized AI Tutoring', 'High Retention UX']}
                                     gradient="from-emerald-600/20 via-green-500/10"
                                 />
 
+                                {/* 🛍️ Project 3: Shree Hari Mahendi Art */}
                                 <ProjectCaseStudy 
                                     index="03"
                                     title="Shree Hari Mahendi Art"
-                                    type="Luxury Booking Platform"
-                                    description="A high-converting booking ecosystem built for premium clientele. Focused on seamless scheduling, CRO, and delivering a luxury brand experience from the first click."
+                                    type="Luxury E-Commerce & Booking"
+                                    url="https://shree-hari-mahendi-art.vercel.app/"
+                                    description="A high-converting booking ecosystem built for premium clientele. Focused on seamless scheduling, Conversion Rate Optimization (CRO), and delivering a luxury brand experience from the first click."
+                                    features={[
+                                        "Dynamic availability calendar & routing.",
+                                        "Automated booking confirmation emails.",
+                                        "High-converting checkout funnel.",
+                                        "Cinematic image galleries and parallax scrolling."
+                                    ]}
                                     techStack={['Next.js', 'Supabase', 'Stripe', 'Framer']}
                                     metrics={['Optimized Conversion Funnel', 'Secure Payments']}
                                     gradient="from-rose-600/20 via-pink-500/10"
                                 />
                                 
+                                {/* 📈 Project 4: Wealth Kavach */}
                                 <ProjectCaseStudy 
                                     index="04"
                                     title="Wealth Kavach"
                                     type="Smart FinTech Ecosystem"
-                                    description="A sleek financial tracking UI paired with a real-time paper-trading simulation. Architected to provide institutional-grade portfolio analytics in a consumer-friendly dashboard."
-                                    techStack={['React Native', 'WebSockets', 'Chart.js', 'Node']}
+                                    url="https://wealth-kavach.vercel.app/"
+                                    description="A sleek financial tracking UI paired with a real-time paper-trading simulation. Architected to provide institutional-grade portfolio analytics in a highly secure, consumer-friendly dashboard."
+                                    features={[
+                                        "Live stock market data feeds via WebSockets.",
+                                        "Interactive charting and candlestick analysis.",
+                                        "Simulated paper trading with virtual ledger.",
+                                        "Bank-grade UI security and data encryption."
+                                    ]}
+                                    techStack={['React', 'WebSockets', 'Chart.js', 'Tailwind']}
                                     metrics={['Real-time Data Sync', 'Bank-Grade UI Safety']}
                                     gradient="from-amber-600/20 via-yellow-500/10"
                                 />
@@ -284,82 +331,119 @@
             );
         }
 
-        function ProjectCaseStudy({ index, title, type, description, techStack, metrics, gradient }) {
+        // Updated Project Case Study with more Text & Live Iframe Preview
+        function ProjectCaseStudy({ index, title, type, url, description, features, techStack, metrics, gradient }) {
+            // Function to extract just the domain for the UI display
+            const getCleanUrl = (fullUrl) => {
+                try { return new URL(fullUrl).hostname; } catch(e) { return fullUrl; }
+            };
+
             return (
                 <motion.div 
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.8 }}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center group"
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center group"
                 >
-                    {/* Text Content */}
+                    {/* Left Side: Detailed Text Content */}
                     <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex items-center gap-4 mb-4">
                             <span className="text-4xl md:text-5xl font-light text-white/10 group-hover:text-white/30 transition-colors font-display">{index}</span>
                             <div className="h-[1px] w-8 md:w-12 bg-white/10"></div>
                             <span className="text-xs md:text-sm font-mono text-zinc-400">{type}</span>
                         </div>
                         
                         <h3 className="font-display text-3xl md:text-4xl font-bold mb-4 text-white">{title}</h3>
-                        <p className="text-zinc-400 leading-relaxed mb-8 font-light text-sm md:text-base">{description}</p>
                         
-                        <div className="space-y-6">
+                        {/* Expanded Description */}
+                        <p className="text-zinc-400 leading-relaxed mb-6 font-light text-sm md:text-base">
+                            {description}
+                        </p>
+
+                        {/* High-End Features List */}
+                        <div className="mb-8 space-y-3">
+                            <h4 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
+                                <IconSparkles /> Core Architectural Features:
+                            </h4>
+                            {features.map((feature, i) => (
+                                <div key={i} className="flex items-start gap-2 text-sm text-zinc-400">
+                                    <span className="mt-0.5"><IconCheckCircle /></span>
+                                    <span>{feature}</span>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* Tags and Action Button */}
+                        <div className="space-y-8">
                             <div>
-                                <h4 className="text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Architecture Stack</h4>
+                                <h4 className="text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Tech Stack</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {techStack.map((tech, i) => (
-                                        <span key={i} className="px-3 py-1 rounded-md glass-panel text-xs text-zinc-300">
+                                        <span key={i} className="px-3 py-1.5 rounded-md glass-panel text-xs text-zinc-300 shadow-sm">
                                             {tech}
                                         </span>
                                     ))}
                                 </div>
                             </div>
-                            
-                            <div>
-                                <h4 className="text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Impact / Metrics</h4>
-                                <div className="flex flex-col gap-2">
-                                    {metrics.map((metric, i) => (
-                                        <div key={i} className="flex items-center gap-2 text-xs md:text-sm text-zinc-300">
-                                            <span className="text-neonBlue"><IconActivity /></span> {metric}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+
+                            <a 
+                                href={url} 
+                                target="_blank" 
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white text-sm font-medium transition-colors w-fit"
+                            >
+                                Open Live Project <IconExternalLink />
+                            </a>
                         </div>
                     </div>
 
-                    {/* 3D Visual Concept */}
+                    {/* Right Side: LIVE IFRAME PREVIEW (Arc Browser Style) */}
                     <div className="lg:col-span-7 order-1 lg:order-2 w-full">
                         <motion.div 
-                            whileHover={{ scale: 1.02, rotateY: -2, rotateX: 2 }}
+                            whileHover={{ scale: 1.01, rotateY: -1, rotateX: 1 }}
                             transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                            className="relative aspect-[4/3] md:aspect-video rounded-2xl p-[1px] bg-gradient-to-b from-white/20 to-transparent w-full overflow-hidden"
+                            className="relative aspect-[3/4] sm:aspect-square md:aspect-video rounded-xl md:rounded-2xl p-[1px] bg-gradient-to-b from-white/20 to-transparent w-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                             style={{ perspective: "1000px" }}
                         >
-                            <div className="absolute inset-[1px] bg-[#0a0a0a] rounded-[15px] overflow-hidden flex items-center justify-center z-10">
-                                {/* Ambient Gradient inside Card */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-50 mix-blend-screen transition-opacity duration-500 group-hover:opacity-100`}></div>
+                            <div className="absolute inset-[1px] bg-[#0a0a0a] rounded-[11px] md:rounded-[15px] overflow-hidden flex flex-col z-10 iframe-container">
                                 
-                                {/* Abstract UI Wireframe Representation */}
-                                <div className="relative z-20 w-[80%] h-[60%] glass-panel rounded-xl border border-white/10 shadow-2xl flex flex-col p-4 md:p-6 overflow-hidden">
-                                    {/* Mock Header */}
-                                    <div className="flex justify-between items-center mb-6">
-                                        <div className="w-24 md:w-32 h-3 bg-white/10 rounded-full animate-pulse"></div>
-                                        <div className="flex gap-2">
-                                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/5"></div>
-                                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white/5"></div>
-                                        </div>
+                                {/* Ambient Background Glow */}
+                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-30 mix-blend-screen pointer-events-none`}></div>
+                                
+                                {/* Mac / Arc Browser Header */}
+                                <div className="h-10 md:h-12 bg-white/[0.02] border-b border-white/5 flex items-center px-4 relative z-20 backdrop-blur-md">
+                                    {/* Mac Buttons */}
+                                    <div className="flex gap-1.5 md:gap-2">
+                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/80"></div>
+                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/80"></div>
+                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/80"></div>
                                     </div>
-                                    {/* Mock Body */}
-                                    <div className="flex-1 grid grid-cols-3 gap-4">
-                                        <div className="col-span-2 space-y-3">
-                                            <div className="w-full h-20 md:h-24 bg-white/5 rounded-lg border border-white/5"></div>
-                                            <div className="w-3/4 h-8 md:h-10 bg-white/5 rounded-lg border border-white/5"></div>
-                                        </div>
-                                        <div className="col-span-1 bg-white/5 rounded-lg border border-white/5"></div>
+                                    
+                                    {/* URL Bar */}
+                                    <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 md:px-4 py-1.5 bg-white/5 rounded-md border border-white/5 w-[50%] md:w-[60%] justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500 hidden md:block"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                        <span className="text-[10px] md:text-xs text-zinc-400 font-mono truncate">{getCleanUrl(url)}</span>
                                     </div>
                                 </div>
+
+                                {/* Actual Live Iframe */}
+                                <div className="flex-1 relative bg-black">
+                                    {/* Overlay to prevent scroll-locking on mobile devices until user hovers/clicks */}
+                                    <div className="iframe-overlay flex items-center justify-center">
+                                        <div className="bg-black/60 backdrop-blur-sm border border-white/10 text-white text-xs px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:hidden">
+                                            Tap to Interact
+                                        </div>
+                                    </div>
+                                    
+                                    <iframe 
+                                        src={url} 
+                                        title={title}
+                                        className="w-full h-full border-none bg-void"
+                                        loading="lazy"
+                                    ></iframe>
+                                </div>
+
                             </div>
                         </motion.div>
                     </div>
@@ -373,3 +457,6 @@
     </script>
 </body>
 </html>
+
+
+```
