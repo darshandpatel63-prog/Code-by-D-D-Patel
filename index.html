@@ -1,74 +1,92 @@
-
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D D Patel | Elite Product Architect</title>
+    <title>D D Patel | Elite UI/UX Architect</title>
     
-    <!-- 🚀 Premium Fonts: Inter & Space Grotesk -->
+    <!-- 🚀 Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     
-    <!-- ⚡ Tailwind CSS (CDN for Mobile Coding) -->
+    <!-- ⚡ Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] },
+                    colors: { void: '#000000', neonBlue: '#0070F3', neonPurple: '#7928CA', linkedin: '#0A66C2' },
+                    animation: {
+                        "meteor-effect": "meteor 5s linear infinite",
+                        "shimmer": "shimmer 2s linear infinite",
                     },
-                    colors: {
-                        void: '#030303',
-                        neonBlue: '#0070F3',
-                        neonPurple: '#7928CA',
+                    keyframes: {
+                        meteor: {
+                            "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+                            "70%": { opacity: "1" },
+                            "100%": { transform: "rotate(215deg) translateX(-500px)", opacity: "0" }
+                        },
+                        shimmer: {
+                            from: { backgroundPosition: "0 0" },
+                            to: { backgroundPosition: "-200% 0" }
+                        }
                     }
                 }
             }
         }
     </script>
 
-    <!-- ⚛️ React & ReactDOM (CDN) -->
+    <!-- ⚛️ React, Babel, Framer Motion, GSAP & Three.js (The Ultimate Stack) -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    
-    <!-- 🛠 Babel for In-Browser JSX Compilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- 🎬 Framer Motion for Cinematic Animations -->
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
-        body { background-color: #030303; color: #e4e4e7; overflow-x: hidden; }
-        ::selection { background: rgba(121, 40, 202, 0.3); color: white; }
+        body { background-color: #000; color: #e4e4e7; overflow-x: hidden; }
+        ::selection { background: rgba(121, 40, 202, 0.4); color: white; }
         
-        /* Premium Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #030303; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* Magic UI Grid Background */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
 
-        /* Glassmorphism Utilities */
+        /* Aceternity Spotlight Card */
+        .spotlight-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(121, 40, 202, 0.15), transparent 40%);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+        
+        .iframe-overlay { position: absolute; inset: 0; z-index: 20; background: transparent; transition: background 0.3s ease; }
+        .iframe-container:hover .iframe-overlay { pointer-events: none; }
+        
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Iframe overlay to prevent mobile scroll locking */
-        .iframe-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 20;
-            background: transparent;
-            transition: background 0.3s ease;
-        }
-        .iframe-container:hover .iframe-overlay {
-            pointer-events: none; /* Allows interaction on hover */
         }
     </style>
 </head>
@@ -76,29 +94,138 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { motion, AnimatePresence } = window.Motion;
+        const { useState, useEffect, useRef } = React;
+        const { motion, useScroll, useTransform, AnimatePresence } = window.Motion;
 
-        // --- 🧩 SVG Icons Components ---
+        // --- 🧩 Icons ---
+        const IconLogo = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="relative z-10">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#00F0FF" />
+                        <stop offset="100%" stopColor="#0070F3" />
+                    </linearGradient>
+                    <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#7928CA" />
+                        <stop offset="100%" stopColor="#FF0080" />
+                    </linearGradient>
+                </defs>
+                <path d="M5 4v16h8c4.418 0 8-3.582 8-8s-3.582-8-8-8H5z" stroke="url(#grad1)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M11 10v4h2c1.105 0 2-.895 2-2s-.895-2-2-2h-2z" stroke="url(#grad2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="url(#grad2)" fillOpacity="0.4"/>
+            </svg>
+        );
         const IconSparkles = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>;
-        const IconArrowRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
-        const IconChevronRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>;
-        const IconGithub = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>;
-        const IconMail = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
-        const IconActivity = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>;
         const IconExternalLink = () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>;
-        const IconCheckCircle = () => <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
+        const IconCode = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
+        const IconCpu = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>;
+        const IconGithub = () => <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>;
+        const IconLinkedIn = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>;
 
         // ==========================================
-        // 🚀 MAIN APPLICATION COMPONENT
+        // 🌌 THREE.JS BACKGROUND COMPONENT (Awwwards Level)
+        // ==========================================
+        const ThreeBackground = () => {
+            const mountRef = useRef(null);
+            
+            useEffect(() => {
+                if (!mountRef.current) return;
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                mountRef.current.appendChild(renderer.domElement);
+
+                // Create Particle Stars
+                const particlesGeometry = new THREE.BufferGeometry();
+                const particlesCount = 700;
+                const posArray = new Float32Array(particlesCount * 3);
+                
+                for(let i = 0; i < particlesCount * 3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 10;
+                }
+                
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const material = new THREE.PointsMaterial({ size: 0.005, color: 0x0070F3, transparent: true, opacity: 0.8 });
+                const particlesMesh = new THREE.Points(particlesGeometry, material);
+                scene.add(particlesMesh);
+
+                camera.position.z = 3;
+
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    particlesMesh.rotation.y += 0.001;
+                    particlesMesh.rotation.x += 0.0005;
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                const handleResize = () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+                window.addEventListener('resize', handleResize);
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                    if(mountRef.current) mountRef.current.removeChild(renderer.domElement);
+                }
+            }, []);
+
+            return <div ref={mountRef} className="fixed inset-0 z-0 pointer-events-none opacity-60" />;
+        };
+
+        // ==========================================
+        // 🧲 MAGNETIC BUTTON COMPONENT (Framer Motion)
+        // ==========================================
+        const MagneticButton = ({ children, className, href, target }) => {
+            const ref = useRef(null);
+            const [position, setPosition] = useState({ x: 0, y: 0 });
+
+            const handleMouse = (e) => {
+                const { clientX, clientY } = e;
+                const { height, width, left, top } = ref.current.getBoundingClientRect();
+                const middleX = clientX - (left + width / 2);
+                const middleY = clientY - (top + height / 2);
+                setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
+            };
+
+            const reset = () => setPosition({ x: 0, y: 0 });
+
+            return (
+                <motion.a
+                    href={href}
+                    target={target}
+                    rel={target === "_blank" ? "noopener noreferrer" : ""}
+                    ref={ref}
+                    onMouseMove={handleMouse}
+                    onMouseLeave={reset}
+                    animate={{ x: position.x, y: position.y }}
+                    transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+                    className={className}
+                >
+                    {children}
+                </motion.a>
+            );
+        };
+
+        // ==========================================
+        // 🚀 MAIN APP COMPONENT
         // ==========================================
         function App() {
-            const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+            // LinkedIn URL
+            const linkedInUrl = "https://www.linkedin.com/in/d-d-patel-5a7b25412?utm_source=share_via&utm_content=profile&utm_medium=member_android";
 
-            // 🖱️ Mouse Tracker for Premium Aurora Effect
             useEffect(() => {
+                // Aceternity Spotlight Effect Logic
                 const handleMouseMove = (e) => {
-                    setMousePos({ x: e.clientX, y: e.clientY });
+                    const cards = document.querySelectorAll(".spotlight-card");
+                    cards.forEach((card) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        card.style.setProperty("--mouse-x", `${x}px`);
+                        card.style.setProperty("--mouse-y", `${y}px`);
+                    });
                 };
                 window.addEventListener("mousemove", handleMouseMove);
                 return () => window.removeEventListener("mousemove", handleMouseMove);
@@ -106,212 +233,138 @@
 
             return (
                 <div className="relative w-full">
-                    {/* 🌌 Dynamic Cursor Glow Background */}
-                    <div 
-                        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300"
-                        style={{
-                            background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(121, 40, 202, 0.08), transparent 40%)`
-                        }}
-                    />
+                    <ThreeBackground />
+                    <div className="fixed inset-0 z-0 pointer-events-none bg-grid-pattern opacity-20"></div>
 
-                    {/* 📱 Premium Navbar */}
-                    <nav className="fixed top-0 w-full z-50 glass-panel border-x-0 border-t-0 py-4">
+                    {/* Navbar */}
+                    <nav className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-xl border-b border-white/5 py-4">
                         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                            <motion.div 
-                                initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-                                className="flex items-center gap-3"
-                            >
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neonPurple to-neonBlue flex items-center justify-center shadow-[0_0_15px_rgba(121,40,202,0.4)]">
-                                    <IconSparkles />
+                            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-4 group cursor-pointer">
+                                <div className="w-10 h-10 rounded-xl glass-panel flex items-center justify-center relative">
+                                    {/* Animated Glow behind the logo */}
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500 to-purple-500 rounded-xl blur-md opacity-40 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <IconLogo />
                                 </div>
-                                <span className="text-sm font-display tracking-widest font-bold text-white uppercase">D.D. Patel</span>
+                                <span className="text-sm font-display tracking-widest font-bold text-white uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 transition-all duration-300">D.D. Patel</span>
                             </motion.div>
-                            <motion.a 
-                                initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                                href="mailto:Vaidyaguru.official.740@gmail.com"
-                                className="px-5 py-2 text-xs font-medium rounded-full bg-white text-black hover:bg-zinc-200 transition-colors flex items-center gap-2"
-                            >
-                                Initiate Project <IconArrowRight />
-                            </motion.a>
+                            <MagneticButton href="#contact" className="px-6 py-2.5 text-xs font-medium rounded-full bg-white text-black transition-transform flex items-center gap-2">
+                                Hire Me
+                            </MagneticButton>
                         </div>
                     </nav>
 
                     <main className="relative z-10">
-                        {/* 🎬 1. CINEMATIC HERO SECTION */}
+                        {/* 🎬 HERO SECTION (Magic UI Style Text Reveal) */}
                         <section className="min-h-screen flex flex-col justify-center px-6 pt-32 pb-20 max-w-7xl mx-auto relative">
-                            {/* Ambient Glow */}
-                            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[400px] bg-neonPurple/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none -z-10" />
-
                             <motion.div 
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                                className="max-w-4xl"
+                                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}
+                                className="max-w-5xl"
                             >
-                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 glass-panel text-zinc-400 mb-8 text-xs font-mono tracking-wide">
-                                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                    Available for Elite Architect Roles
+                                {/* Magic UI Shimmer Badge */}
+                                <div className="inline-flex mb-8 animate-shimmer items-center justify-center rounded-full border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-4 py-1.5 text-sm font-medium text-slate-400 transition-colors">
+                                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse mr-2" /> Top 1% Frontend Architect
                                 </div>
                                 
-                                <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1] text-white">
-                                    Engineering digital <br className="hidden md:block"/>
-                                    experiences that <br className="hidden md:block"/>
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400">
-                                        captivate & scale.
-                                    </span>
+                                <h1 className="font-display text-5xl md:text-8xl font-bold tracking-tighter mb-6 leading-[1.05] text-white">
+                                    Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-300">impossible</span> <br className="hidden md:block"/> with Code & AI.
                                 </h1>
                                 
-                                <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mb-12 leading-relaxed font-light">
-                                    I am an AI-Powered Frontend Architect. I don't just build websites; I engineer high-converting digital products combining premium UI/UX with modern AI technologies.
+                                <p className="text-lg md:text-2xl text-zinc-400 max-w-2xl mb-12 font-light">
+                                    I engineer ultra-premium digital experiences. Bridging the gap between cinematic design and high-performance engineering.
                                 </p>
 
-                                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                                    <a href="#projects" className="group relative px-8 py-4 bg-white text-black rounded-full font-medium overflow-hidden w-full sm:w-auto text-center flex justify-center items-center">
-                                        <span className="relative z-10 flex items-center gap-2">
-                                            View Masterpieces <span className="group-hover:translate-x-1 transition-transform"><IconChevronRight /></span>
-                                        </span>
-                                    </a>
-                                    <a href="https://github.com/darshandpatel63-prog" target="_blank" className="px-8 py-4 rounded-full border border-white/10 text-white hover:bg-white/5 transition-all flex justify-center items-center gap-2 font-medium w-full sm:w-auto">
-                                        <IconGithub /> Explore GitHub
-                                    </a>
+                                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                                    <MagneticButton href="#projects" className="px-8 py-4 rounded-full bg-white text-black font-semibold shadow-[0_0_30px_rgba(255,255,255,0.2)] text-center flex justify-center items-center">
+                                        View Masterpieces
+                                    </MagneticButton>
+                                    
+                                    {/* 🚀 New LinkedIn Button in Hero */}
+                                    <MagneticButton 
+                                        href={linkedInUrl} 
+                                        target="_blank" 
+                                        className="px-8 py-4 rounded-full glass-panel text-white font-medium hover:bg-white/10 hover:border-blue-500/50 transition-all text-center flex justify-center items-center gap-2 group"
+                                    >
+                                        <span className="text-zinc-400 group-hover:text-linkedin transition-colors"><IconLinkedIn /></span> Connect on LinkedIn
+                                    </MagneticButton>
                                 </div>
-                            </motion.div>
-
-                            {/* Trust Metrics */}
-                            <motion.div 
-                                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 1 }}
-                                className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-24 border-t border-white/5 pt-12"
-                            >
-                                <StatBox title="Lighthouse Score" value="95+" />
-                                <StatBox title="Design Aesthetic" value="Ultra-Premium" />
-                                <StatBox title="Code Architecture" value="Scalable" />
-                                <StatBox title="Focus Area" value="AI & UX" />
                             </motion.div>
                         </section>
 
-                        {/* 🏆 2. PROJECT SHOWCASE (Startup Level) */}
-                        <section id="projects" className="py-24 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
-                            <div className="mb-16 md:mb-24">
-                                <h2 className="text-sm font-mono text-neonPurple mb-3 uppercase tracking-widest">Case Studies & Live Previews</h2>
-                                <h3 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Proven Innovations.</h3>
+                        {/* 🧩 BENTO GRID SKILLS (Apple / Aceternity Style) */}
+                        <section className="py-24 px-6 max-w-7xl mx-auto">
+                            <div className="mb-16">
+                                <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">The Architect's Arsenal.</h2>
+                                <p className="text-zinc-400 max-w-xl">A synergistic blend of modern frontend frameworks, AI integration, and cinematic animation engines.</p>
                             </div>
 
-                            <div className="space-y-32 md:space-y-48">
-                                
-                                {/* 🚀 Project 1: MotionZync */}
-                                <ProjectCaseStudy 
-                                    index="01"
-                                    title="MotionZync"
-                                    type="Animation Engine & Sandbox"
-                                    url="https://motion-zync.vercel.app"
-                                    description="A high-performance CSS/JS sandbox engineered with a built-in futuristic animation engine. Designed specifically for elite frontend developers to craft, test, and sync complex UI motions in a zero-latency environment."
-                                    features={[
-                                        "Real-time DOM rendering and execution.",
-                                        "Integrated Framer Motion & GSAP physics.",
-                                        "State-of-the-art Glassmorphism UI.",
-                                        "Memory-optimized for low-end devices."
-                                    ]}
-                                    techStack={['React', 'Framer Motion', 'WebWorker', 'Tailwind CSS']}
-                                    metrics={['60fps Smooth Rendering', 'Zero-Lag Execution']}
-                                    gradient="from-blue-600/20 via-cyan-500/10"
-                                />
-
-                                {/* 🧠 Project 2: Vaidya Guru */}
-                                <ProjectCaseStudy 
-                                    index="02"
-                                    title="Vaidya Guru"
-                                    type="AI-Powered Medical EdTech"
-                                    url="https://vaidya-guru.vercel.app/"
-                                    description="Where ancient Ayurveda meets modern AI. A sophisticated EdTech platform for medical students featuring AI-driven study paths, intelligent doubt resolution, and premium interactive learning modules."
-                                    features={[
-                                        "Context-aware AI search for Ayurvedic scriptures.",
-                                        "Dynamic Shloka generation and translations.",
-                                        "Personalized student dashboard & progress tracking.",
-                                        "Vector-based knowledge retrieval system."
-                                    ]}
-                                    techStack={['Next.js', 'OpenAI API', 'Vector DB', 'UI/UX']}
-                                    metrics={['Personalized AI Tutoring', 'High Retention UX']}
-                                    gradient="from-emerald-600/20 via-green-500/10"
-                                />
-
-                                {/* 🛍️ Project 3: Shree Hari Mahendi Art */}
-                                <ProjectCaseStudy 
-                                    index="03"
-                                    title="Shree Hari Mahendi Art"
-                                    type="Luxury E-Commerce & Booking"
-                                    url="https://shree-hari-mahendi-art.vercel.app/"
-                                    description="A high-converting booking ecosystem built for premium clientele. Focused on seamless scheduling, Conversion Rate Optimization (CRO), and delivering a luxury brand experience from the first click."
-                                    features={[
-                                        "Dynamic availability calendar & routing.",
-                                        "Automated booking confirmation emails.",
-                                        "High-converting checkout funnel.",
-                                        "Cinematic image galleries and parallax scrolling."
-                                    ]}
-                                    techStack={['Next.js', 'Supabase', 'Stripe', 'Framer']}
-                                    metrics={['Optimized Conversion Funnel', 'Secure Payments']}
-                                    gradient="from-rose-600/20 via-pink-500/10"
-                                />
-                                
-                                {/* 📈 Project 4: Wealth Kavach */}
-                                <ProjectCaseStudy 
-                                    index="04"
-                                    title="Wealth Kavach"
-                                    type="Smart FinTech Ecosystem"
-                                    url="https://wealth-kavach.vercel.app/"
-                                    description="A sleek financial tracking UI paired with a real-time paper-trading simulation. Architected to provide institutional-grade portfolio analytics in a highly secure, consumer-friendly dashboard."
-                                    features={[
-                                        "Live stock market data feeds via WebSockets.",
-                                        "Interactive charting and candlestick analysis.",
-                                        "Simulated paper trading with virtual ledger.",
-                                        "Bank-grade UI security and data encryption."
-                                    ]}
-                                    techStack={['React', 'WebSockets', 'Chart.js', 'Tailwind']}
-                                    metrics={['Real-time Data Sync', 'Bank-Grade UI Safety']}
-                                    gradient="from-amber-600/20 via-yellow-500/10"
-                                />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="spotlight-card col-span-1 md:col-span-2 p-8 md:p-12 flex flex-col justify-end min-h-[300px]">
+                                    <IconCode className="text-blue-400 mb-4 w-10 h-10" />
+                                    <h3 className="text-2xl font-bold text-white mb-2">Frontend Engineering</h3>
+                                    <p className="text-zinc-400">Next.js, React 18, TypeScript, Tailwind CSS, Shadcn UI. Building highly scalable and modular component architectures.</p>
+                                </div>
+                                <div className="spotlight-card p-8 md:p-12 flex flex-col justify-end min-h-[300px] bg-gradient-to-br from-purple-900/20 to-transparent">
+                                    <IconCpu className="text-purple-400 mb-4 w-10 h-10" />
+                                    <h3 className="text-2xl font-bold text-white mb-2">AI Integration</h3>
+                                    <p className="text-zinc-400">OpenAI, Vector DBs, RAG Systems, AI Agents.</p>
+                                </div>
+                                <div className="spotlight-card p-8 md:p-12 flex flex-col justify-end min-h-[300px] col-span-1 md:col-span-3">
+                                    <IconSparkles className="text-cyan-400 mb-4 w-10 h-10" />
+                                    <h3 className="text-2xl font-bold text-white mb-2">Cinematic Motion & 3D</h3>
+                                    <p className="text-zinc-400 max-w-2xl">Framer Motion, GSAP, Three.js, WebGL, Aceternity UI. Crafting awwwards-winning micro-interactions and scroll storytelling.</p>
+                                </div>
                             </div>
                         </section>
 
-                        {/* 📧 3. CONTACT SECTION */}
-                        <section className="py-32 px-6 border-t border-white/5 relative overflow-hidden flex justify-center items-center flex-col">
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[500px] bg-neonBlue/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none -z-10" />
-                            
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="p-[1px] rounded-full bg-gradient-to-b from-white/20 to-transparent inline-block mb-8"
-                            >
-                                <div className="glass-panel rounded-full px-6 py-2 text-sm text-zinc-400">
-                                    Ready to scale your vision?
-                                </div>
-                            </motion.div>
+                        {/* 🏆 LIVE PROJECT SHOWCASE */}
+                        <section id="projects" className="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
+                            <div className="mb-24">
+                                <h3 className="font-display text-5xl font-bold tracking-tight text-white">Live Case Studies.</h3>
+                            </div>
 
-                            <h2 className="font-display text-5xl md:text-7xl font-bold tracking-tighter mb-8 text-center text-white">
-                                Let's build the <br className="md:hidden"/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">impossible.</span>
-                            </h2>
-                            
-                            <p className="text-lg md:text-xl text-zinc-400 mb-12 max-w-2xl mx-auto font-light text-center">
-                                Whether you are a founder looking for an MVP, or an agency needing an elite frontend architect. I am ready to engineer your next digital breakthrough.
-                            </p>
-
-                            <a 
-                                href="mailto:Vaidyaguru.official.740@gmail.com" 
-                                className="inline-flex items-center justify-center gap-3 px-8 md:px-10 py-4 md:py-5 rounded-full bg-white text-black font-semibold hover:scale-105 transition-transform duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)] w-full sm:w-auto"
-                            >
-                                <IconMail /> Vaidyaguru.official.740@gmail.com
-                            </a>
+                            <div className="space-y-40">
+                                <ProjectCaseStudy 
+                                    index="01" title="MotionZync" type="Animation Engine & Sandbox" url="https://motion-zync.vercel.app"
+                                    description="A high-performance CSS/JS sandbox engineered with a built-in futuristic animation engine for elite developers."
+                                    techStack={['React', 'Framer Motion', 'WebWorker']}
+                                    gradient="from-blue-600/30 to-cyan-500/10"
+                                />
+                                <ProjectCaseStudy 
+                                    index="02" title="Vaidya Guru" type="AI-Powered Medical EdTech" url="https://vaidya-guru.vercel.app/"
+                                    description="Where ancient Ayurveda meets modern AI. A sophisticated EdTech platform for medical students."
+                                    techStack={['Next.js', 'OpenAI API', 'Vector DB']}
+                                    gradient="from-emerald-600/30 to-green-500/10"
+                                />
+                                <ProjectCaseStudy 
+                                    index="03" title="Shree Hari Mahendi Art" type="Luxury Booking Platform" url="https://shree-hari-mahendi-art.vercel.app/"
+                                    description="A high-converting booking ecosystem built for premium clientele. Focused on seamless scheduling."
+                                    techStack={['Next.js', 'Supabase', 'Stripe']}
+                                    gradient="from-rose-600/30 to-pink-500/10"
+                                />
+                                <ProjectCaseStudy 
+                                    index="04" title="Wealth Kavach" type="Smart FinTech Ecosystem" url="https://wealth-kavach.vercel.app/"
+                                    description="A sleek financial tracking UI paired with a real-time paper-trading simulation."
+                                    techStack={['React Native', 'WebSockets', 'Chart.js']}
+                                    gradient="from-amber-600/30 to-yellow-500/10"
+                                />
+                            </div>
                         </section>
 
                         {/* Footer */}
-                        <footer className="border-t border-white/5 py-10 flex flex-col items-center">
-                            <div className="flex gap-6 mb-6">
-                                <a href="https://github.com/darshandpatel63-prog" target="_blank" className="text-zinc-500 hover:text-white transition-colors">
+                        <footer className="border-t border-white/10 py-12 flex flex-col items-center">
+                            
+                            {/* 🚀 New Social Links in Footer */}
+                            <div className="flex gap-6 mb-8">
+                                <a href="https://github.com/darshandpatel63-prog" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-all hover:scale-110">
                                     <IconGithub />
                                 </a>
+                                <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-linkedin transition-all hover:scale-110">
+                                    <IconLinkedIn />
+                                </a>
                             </div>
-                            <p className="text-zinc-600 text-xs font-mono uppercase tracking-widest text-center">
-                                © {new Date().getFullYear()} D D Patel. Engineered with Precision & AI.
+
+                            <p className="text-zinc-600 text-xs font-mono uppercase tracking-widest">
+                                © {new Date().getFullYear()} D D Patel. UI Pro Max Architecture.
                             </p>
                         </footer>
                     </main>
@@ -319,142 +372,45 @@
             );
         }
 
-        // ==========================================
-        // 🧩 MICRO-COMPONENTS
-        // ==========================================
-        function StatBox({ title, value }) {
+        // --- Iframe Component ---
+        function ProjectCaseStudy({ index, title, type, url, description, techStack, gradient }) {
             return (
-                <div className="flex flex-col gap-1 md:gap-2">
-                    <span className="text-zinc-500 text-[10px] md:text-xs font-mono uppercase tracking-wider">{title}</span>
-                    <span className="text-white font-display font-bold text-base md:text-xl">{value}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center spotlight-card p-4 md:p-8">
+                    <div className="lg:col-span-5 flex flex-col z-10 relative">
+                        <div className="text-4xl font-light text-white/20 font-display mb-2">{index}</div>
+                        <h3 className="font-display text-3xl font-bold mb-4 text-white">{title}</h3>
+                        <p className="text-zinc-400 mb-6 font-light">{description}</p>
+                        <div className="flex flex-wrap gap-2 mb-8">
+                            {techStack.map((tech, i) => (
+                                <span key={i} className="px-3 py-1 rounded border border-white/10 bg-white/5 text-xs text-zinc-300">{tech}</span>
+                            ))}
+                        </div>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full text-sm font-medium w-fit">
+                            Open Full Site <IconExternalLink />
+                        </a>
+                    </div>
+
+                    <div className="lg:col-span-7 w-full z-10 relative">
+                        <div className="relative aspect-video rounded-xl p-[1px] bg-gradient-to-b from-white/20 to-transparent overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                            <div className="absolute inset-[1px] bg-[#0a0a0a] rounded-[11px] overflow-hidden flex flex-col iframe-container">
+                                <div className="h-8 bg-white/5 border-b border-white/5 flex items-center px-4">
+                                    <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div></div>
+                                </div>
+                                <div className="flex-1 relative bg-black">
+                                    <div className="iframe-overlay flex items-center justify-center">
+                                        <div className="bg-black/80 border border-white/20 text-white text-xs px-4 py-2 rounded-full opacity-0 hover:opacity-100 transition-opacity md:hidden">Tap to Interact</div>
+                                    </div>
+                                    <iframe src={url} title={title} className="w-full h-full border-none" loading="lazy"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         }
 
-        // Updated Project Case Study with more Text & Live Iframe Preview
-        function ProjectCaseStudy({ index, title, type, url, description, features, techStack, metrics, gradient }) {
-            // Function to extract just the domain for the UI display
-            const getCleanUrl = (fullUrl) => {
-                try { return new URL(fullUrl).hostname; } catch(e) { return fullUrl; }
-            };
-
-            return (
-                <motion.div 
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8 }}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-center group"
-                >
-                    {/* Left Side: Detailed Text Content */}
-                    <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-4xl md:text-5xl font-light text-white/10 group-hover:text-white/30 transition-colors font-display">{index}</span>
-                            <div className="h-[1px] w-8 md:w-12 bg-white/10"></div>
-                            <span className="text-xs md:text-sm font-mono text-zinc-400">{type}</span>
-                        </div>
-                        
-                        <h3 className="font-display text-3xl md:text-4xl font-bold mb-4 text-white">{title}</h3>
-                        
-                        {/* Expanded Description */}
-                        <p className="text-zinc-400 leading-relaxed mb-6 font-light text-sm md:text-base">
-                            {description}
-                        </p>
-
-                        {/* High-End Features List */}
-                        <div className="mb-8 space-y-3">
-                            <h4 className="text-white font-medium text-sm mb-2 flex items-center gap-2">
-                                <IconSparkles /> Core Architectural Features:
-                            </h4>
-                            {features.map((feature, i) => (
-                                <div key={i} className="flex items-start gap-2 text-sm text-zinc-400">
-                                    <span className="mt-0.5"><IconCheckCircle /></span>
-                                    <span>{feature}</span>
-                                </div>
-                            ))}
-                        </div>
-                        
-                        {/* Tags and Action Button */}
-                        <div className="space-y-8">
-                            <div>
-                                <h4 className="text-[10px] md:text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Tech Stack</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {techStack.map((tech, i) => (
-                                        <span key={i} className="px-3 py-1.5 rounded-md glass-panel text-xs text-zinc-300 shadow-sm">
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <a 
-                                href={url} 
-                                target="_blank" 
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white text-sm font-medium transition-colors w-fit"
-                            >
-                                Open Live Project <IconExternalLink />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Right Side: LIVE IFRAME PREVIEW (Arc Browser Style) */}
-                    <div className="lg:col-span-7 order-1 lg:order-2 w-full">
-                        <motion.div 
-                            whileHover={{ scale: 1.01, rotateY: -1, rotateX: 1 }}
-                            transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                            className="relative aspect-[3/4] sm:aspect-square md:aspect-video rounded-xl md:rounded-2xl p-[1px] bg-gradient-to-b from-white/20 to-transparent w-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-                            style={{ perspective: "1000px" }}
-                        >
-                            <div className="absolute inset-[1px] bg-[#0a0a0a] rounded-[11px] md:rounded-[15px] overflow-hidden flex flex-col z-10 iframe-container">
-                                
-                                {/* Ambient Background Glow */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-30 mix-blend-screen pointer-events-none`}></div>
-                                
-                                {/* Mac / Arc Browser Header */}
-                                <div className="h-10 md:h-12 bg-white/[0.02] border-b border-white/5 flex items-center px-4 relative z-20 backdrop-blur-md">
-                                    {/* Mac Buttons */}
-                                    <div className="flex gap-1.5 md:gap-2">
-                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/80"></div>
-                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/80"></div>
-                                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/80"></div>
-                                    </div>
-                                    
-                                    {/* URL Bar */}
-                                    <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 md:px-4 py-1.5 bg-white/5 rounded-md border border-white/5 w-[50%] md:w-[60%] justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500 hidden md:block"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                        <span className="text-[10px] md:text-xs text-zinc-400 font-mono truncate">{getCleanUrl(url)}</span>
-                                    </div>
-                                </div>
-
-                                {/* Actual Live Iframe */}
-                                <div className="flex-1 relative bg-black">
-                                    {/* Overlay to prevent scroll-locking on mobile devices until user hovers/clicks */}
-                                    <div className="iframe-overlay flex items-center justify-center">
-                                        <div className="bg-black/60 backdrop-blur-sm border border-white/10 text-white text-xs px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:hidden">
-                                            Tap to Interact
-                                        </div>
-                                    </div>
-                                    
-                                    <iframe 
-                                        src={url} 
-                                        title={title}
-                                        className="w-full h-full border-none bg-void"
-                                        loading="lazy"
-                                    ></iframe>
-                                </div>
-
-                            </div>
-                        </motion.div>
-                    </div>
-                </motion.div>
-            );
-        }
-
-        // Render the App
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
 </html>
-
