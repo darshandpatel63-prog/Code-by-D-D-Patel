@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D D Patel Portfolio — Architecture Flowchart</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#07070F;color:#EEEEF0;font-family:'DM Sans',sans-serif;min-height:100vh;padding:3rem 2rem;overflow-x:hidden}
+h1{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;letter-spacing:-.04em;color:#EEEEF0;margin-bottom:.5rem}
+.sub{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#3F3F46;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3rem}
+.acc{color:#00E5CC}
+
+/* DIAGRAM */
+.diagram{width:100%;max-width:1200px;margin:0 auto}
+svg{width:100%;height:auto}
+
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:3rem;max-width:1200px;margin-left:auto;margin-right:auto;border-top:1px solid rgba(255,255,255,.07);padding-top:2rem}
+.leg-item{display:flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:#71717A;letter-spacing:.06em;text-transform:uppercase}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+.footer-note{max-width:1200px;margin:2rem auto 0;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#3F3F46;letter-spacing:.08em;text-align:center;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div style="max-width:1200px;margin:0 auto">
+  <h1>Portfolio <span class="acc">Architecture</span></h1>
+  <p class="sub">D D Patel · Frontend Architect · System Flowchart · 2025</p>
+</div>
+
+<div class="diagram">
+<svg viewBox="0 0 1160 1480" xmlns="http://www.w3.org/2000/svg" font-family="'DM Sans',sans-serif">
+<defs>
+  <!-- Gradients -->
+  <linearGradient id="gAcc" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#00E5CC"/>
+    <stop offset="100%" stop-color="#4F6EF7"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#4F6EF7" stop-opacity=".8"/>
+    <stop offset="100%" stop-color="#00E5CC" stop-opacity=".4"/>
+  </linearGradient>
+  <linearGradient id="gNode" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(255,255,255,.07)"/>
+    <stop offset="100%" stop-color="rgba(255,255,255,.025)"/>
+  </linearGradient>
+  <linearGradient id="gHero" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(0,229,204,.15)"/>
+    <stop offset="100%" stop-color="rgba(0,229,204,.03)"/>
+  </linearGradient>
+  <linearGradient id="gSection" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(79,110,247,.12)"/>
+    <stop offset="100%" stop-color="rgba(79,110,247,.03)"/>
+  </linearGradient>
+  <linearGradient id="gJs" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="rgba(255,200,0,.12)"/>
+    <stop offset="100%" stop-color="rgba(255,200,0,.03)"/>
+  </linearGradient>
+  <!-- Arrow marker -->
+  <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#00E5CC" opacity=".6"/>
+  </marker>
+  <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#4F6EF7" opacity=".5"/>
+  </marker>
+  <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#71717A" opacity=".5"/>
+  </marker>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="3" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<!-- BG GRID -->
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
+</pattern>
+<rect width="1160" height="1480" fill="#07070F"/>
+<rect width="1160" height="1480" fill="url(#grid)"/>
+
+<!-- ══════════════════════════════
+     ROW 1: ENTRY POINT
+══════════════════════════════ -->
+
+<!-- User -->
+<rect x="480" y="30" width="200" height="54" rx="27" fill="url(#gAcc)" opacity=".9"/>
+<text x="580" y="62" text-anchor="middle" fill="#07070F" font-family="'Syne',sans-serif" font-size="14" font-weight="700">👤  USER VISIT</text>
+
+<!-- Arrow down -->
+<line x1="580" y1="84" x2="580" y2="118" stroke="#00E5CC" stroke-width="1.5" marker-end="url(#arr)" opacity=".6"/>
+
+<!-- index.html Entry -->
+<rect x="380" y="120" width="400" height="68" rx="14" fill="url(#gHero)" stroke="#00E5CC" stroke-width="1" stroke-opacity=".4"/>
+<text x="580" y="149" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="13" font-weight="700">index.html  —  SINGLE PAGE APP</text>
+<text x="580" y="168" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="10">HTML · CSS Variables · Vanilla JS Engine</text>
+
+<!-- Arrow down -->
+<line x1="580" y1="188" x2="580" y2="224" stroke="#00E5CC" stroke-width="1.5" marker-end="url(#arr)" opacity=".6"/>
+
+<!-- Window Load -->
+<rect x="440" y="226" width="280" height="50" rx="25" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+<text x="580" y="256" text-anchor="middle" fill="#EEEEF0" font-family="'JetBrains Mono',monospace" font-size="11">window.addEventListener('load')</text>
+
+<!-- Arrow down — splits into 3 -->
+<line x1="580" y1="276" x2="580" y2="306" stroke="#00E5CC" stroke-width="1.5" opacity=".5"/>
+<line x1="580" y1="306" x2="220" y2="306" stroke="#00E5CC" stroke-width="1" opacity=".4"/>
+<line x1="580" y1="306" x2="940" y2="306" stroke="#00E5CC" stroke-width="1" opacity=".4"/>
+<line x1="220" y1="306" x2="220" y2="336" stroke="#00E5CC" stroke-width="1.5" marker-end="url(#arr)" opacity=".5"/>
+<line x1="580" y1="306" x2="580" y2="336" stroke="#00E5CC" stroke-width="1.5" marker-end="url(#arr)" opacity=".5"/>
+<line x1="940" y1="306" x2="940" y2="336" stroke="#00E5CC" stroke-width="1.5" marker-end="url(#arr)" opacity=".5"/>
+
+<!-- ══════════════════════════════
+     ROW 2: 3 INIT SYSTEMS
+══════════════════════════════ -->
+
+<!-- Loader -->
+<rect x="100" y="338" width="240" height="80" rx="12" fill="url(#gHero)" stroke="#00E5CC" stroke-width="1" stroke-opacity=".35"/>
+<text x="220" y="366" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="12" font-weight="700">⏳ LOADER</text>
+<text x="220" y="383" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">GSAP: opacity → 0</text>
+<text x="220" y="398" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">scale 1.05 · delay 1.7s</text>
+
+<!-- Three.js -->
+<rect x="460" y="338" width="240" height="80" rx="12" fill="url(#gHero)" stroke="#00E5CC" stroke-width="1" stroke-opacity=".35"/>
+<text x="580" y="366" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🔮 THREE.JS HERO</text>
+<text x="580" y="383" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Scene + Camera + Renderer</text>
+<text x="580" y="398" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">110 Particles + rAF loop</text>
+
+<!-- Cursor -->
+<rect x="820" y="338" width="240" height="80" rx="12" fill="url(#gHero)" stroke="#00E5CC" stroke-width="1" stroke-opacity=".35"/>
+<text x="940" y="366" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🎯 CURSOR SYSTEM</text>
+<text x="940" y="383" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">dot (instant) + ring (lerp 0.12)</text>
+<text x="940" y="398" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">hover class · magnetic btns</text>
+
+<!-- Arrows down from all 3 -->
+<line x1="220" y1="418" x2="220" y2="450" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+<line x1="580" y1="418" x2="580" y2="450" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+<line x1="940" y1="418" x2="940" y2="450" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- ══════════════════════════════
+     ROW 3: HERO REVEAL + GSAP
+══════════════════════════════ -->
+
+<!-- Hero Reveal -->
+<rect x="100" y="452" width="240" height="100" rx="12" fill="url(#gJs)" stroke="rgba(255,200,0,.35)" stroke-width="1"/>
+<text x="220" y="480" text-anchor="middle" fill="#FFD700" font-family="'Syne',sans-serif" font-size="12" font-weight="700">✨ HERO REVEAL</text>
+<text x="220" y="497" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">.h-line span → y:110%→0</text>
+<text x="220" y="511" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">.h-badge → opacity 0→1</text>
+<text x="220" y="525" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">.h-tag + .h-ctas stagger</text>
+<text x="220" y="539" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">scroll indicator → fade in</text>
+
+<!-- Three.js detail -->
+<rect x="460" y="452" width="240" height="100" rx="12" fill="url(#gJs)" stroke="rgba(255,200,0,.35)" stroke-width="1"/>
+<text x="580" y="480" text-anchor="middle" fill="#FFD700" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🌀 PARTICLE ENGINE</text>
+<text x="580" y="497" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">BufferGeometry + PointsMaterial</text>
+<text x="580" y="511" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">velocity bounce boundaries</text>
+<text x="580" y="525" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">mouse → camera lerp</text>
+<text x="580" y="539" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">resize → updateProjectionMatrix</text>
+
+<!-- Role rotator -->
+<rect x="820" y="452" width="240" height="100" rx="12" fill="url(--gJs)" fill-opacity=".5" stroke="rgba(255,200,0,.35)" stroke-width="1" fill="url(#gJs)"/>
+<text x="940" y="480" text-anchor="middle" fill="#FFD700" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🔄 ROLE ROTATOR</text>
+<text x="940" y="497" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">setInterval 2800ms</text>
+<text x="940" y="511" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">active → exit → next.on</text>
+<text x="940" y="525" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">cubic-bezier(.76,0,.24,1)</text>
+<text x="940" y="539" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">3 roles · infinite loop</text>
+
+<!-- ══════════════════════════════
+     SECTION FLOW (main spine)
+══════════════════════════════ -->
+
+<!-- Connector lines from row 3 to section flow -->
+<line x1="220" y1="552" x2="220" y2="590" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="580" y1="552" x2="580" y2="590" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="940" y1="552" x2="940" y2="590" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="220" y1="590" x2="940" y2="590" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+<line x1="580" y1="590" x2="580" y2="618" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- SECTION FLOW LABEL -->
+<text x="580" y="610" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="3">PAGE SECTION FLOW</text>
+
+<!-- ══════════════════════════════
+     SECTION BLOCKS
+══════════════════════════════ -->
+
+<!-- Helper macro: each section block -->
+
+<!-- NAV -->
+<rect x="390" y="622" width="380" height="56" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="645" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🗺  NAVIGATION</text>
+<text x="580" y="662" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Fixed · blur on scroll · .n-pill CTA · responsive hide</text>
+<line x1="580" y1="678" x2="580" y2="700" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- HERO SECTION -->
+<rect x="390" y="702" width="380" height="72" rx="10" fill="url(#gHero)" stroke="#00E5CC" stroke-opacity=".5" stroke-width="1.5"/>
+<text x="580" y="727" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="13" font-weight="700">⚡  HERO SECTION</text>
+<text x="580" y="745" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Three.js canvas · Animated name · Role rotator</text>
+<text x="580" y="761" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Badge · Tagline · 3 CTAs · Scroll indicator</text>
+<line x1="580" y1="774" x2="580" y2="796" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- MARQUEE -->
+<rect x="390" y="798" width="380" height="50" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="580" y="820" text-anchor="middle" fill="#71717A" font-family="'Syne',sans-serif" font-size="11" font-weight="700">▶▶  TECH MARQUEE</text>
+<text x="580" y="836" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">CSS animation · 28s infinite · 16 tech labels × 2</text>
+<line x1="580" y1="848" x2="580" y2="868" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- ABOUT -->
+<rect x="390" y="870" width="380" height="72" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="895" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">👤  ABOUT — BENTO GRID</text>
+<text x="580" y="912" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">12-col grid · Spotlight spotlight-card hover</text>
+<text x="580" y="928" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Bio card (7col×2row) · Philosophy · Stats · Stack</text>
+<line x1="580" y1="942" x2="580" y2="962" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- SKILLS -->
+<rect x="390" y="964" width="380" height="60" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="989" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">⚙️  SKILLS GRID</text>
+<text x="580" y="1006" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">8 cards · auto-fill 270px · JS-populated</text>
+<text x="580" y="1020" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">GSAP stagger scroll reveal · hover lift</text>
+<line x1="580" y1="1024" x2="580" y2="1044" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- PROJECTS -->
+<rect x="390" y="1046" width="380" height="72" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="1071" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🚀  PROJECTS — 4 CASE STUDIES</text>
+<text x="580" y="1088" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Alternating layout · Live iframe previews</text>
+<text x="580" y="1104" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Tech tags · External link → reveal animation</text>
+<line x1="580" y1="1118" x2="580" y2="1138" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- EXPERIENCE -->
+<rect x="390" y="1140" width="380" height="60" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="1165" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">📅  EXPERIENCE TIMELINE</text>
+<text x="580" y="1181" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">4 entries · CSS vertical line · dot nodes</text>
+<text x="580" y="1196" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">GSAP x-axis stagger scroll reveal</text>
+<line x1="580" y1="1200" x2="580" y2="1220" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- TRUST -->
+<rect x="390" y="1222" width="380" height="60" rx="10" fill="url(#gSection)" stroke="#4F6EF7" stroke-opacity=".4" stroke-width="1"/>
+<text x="580" y="1247" text-anchor="middle" fill="#4F6EF7" font-family="'Syne',sans-serif" font-size="12" font-weight="700">🏆  TRUST SIGNALS</text>
+<text x="580" y="1263" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">4 stat cards · Principles bento grid</text>
+<text x="580" y="1278" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">Perf · Security · A11y · Async · AI</text>
+<line x1="580" y1="1282" x2="580" y2="1302" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- CONTACT -->
+<rect x="390" y="1304" width="380" height="60" rx="10" fill="url(#gHero)" stroke="#00E5CC" stroke-opacity=".5" stroke-width="1.5"/>
+<text x="580" y="1329" text-anchor="middle" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="12" font-weight="700">✉  CONTACT SECTION</text>
+<text x="580" y="1345" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9.5">Radial glow background · 3 social links</text>
+<text x="580" y="1360" text-anchor="middle" fill="#71717A" font-family="'JetBrains Mono',monospace" font-size="9">Email · LinkedIn · GitHub · Hover lift</text>
+<line x1="580" y1="1364" x2="580" y2="1384" stroke="#4F6EF7" stroke-width="1.5" marker-end="url(#arr2)" opacity=".5"/>
+
+<!-- FOOTER -->
+<rect x="430" y="1386" width="300" height="50" rx="25" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+<text x="580" y="1407" text-anchor="middle" fill="#71717A" font-family="'Syne',sans-serif" font-size="11" font-weight="700">🔚  FOOTER</text>
+<text x="580" y="1423" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">Brand · Copyright · Social Links</text>
+
+<!-- ══════════════════════════════
+     SIDE ANNOTATIONS
+══════════════════════════════ -->
+
+<!-- Left side: JS Systems label -->
+<text x="72" y="450" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" transform="rotate(-90 72 450)">JAVASCRIPT ENGINE</text>
+<line x1="88" y1="338" x2="88" y2="552" stroke="rgba(255,255,255,.06)" stroke-width="1" stroke-dasharray="3,6"/>
+
+<!-- Right side: Scroll Trigger label -->
+<text x="1090" y="900" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" transform="rotate(90 1090 900)">GSAP SCROLLTRIGGER</text>
+<line x1="1074" y1="622" x2="1074" y2="1436" stroke="rgba(255,255,255,.04)" stroke-width="1" stroke-dasharray="3,6"/>
+
+<!-- ScrollTrigger bracket right side for sections -->
+<rect x="1076" y="870" width="5" height="554" rx="2" fill="rgba(79,110,247,.15)"/>
+<text x="1096" y="1148" text-anchor="start" fill="#4F6EF7" font-family="'JetBrains Mono',monospace" font-size="8.5" opacity=".5">reveal</text>
+
+<!-- ══════════════════════════════
+     SIDE BOXES: CDN DEPS
+══════════════════════════════ -->
+
+<rect x="30" y="700" width="180" height="150" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+<text x="120" y="724" text-anchor="middle" fill="#71717A" font-family="'Syne',sans-serif" font-size="11" font-weight="700">📦 CDN DEPS</text>
+<text x="120" y="745" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">GSAP 3.12.5</text>
+<text x="120" y="760" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">ScrollTrigger</text>
+<text x="120" y="775" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">Three.js r134</text>
+<text x="120" y="793" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">Syne · DM Sans</text>
+<text x="120" y="808" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">JetBrains Mono</text>
+<text x="120" y="826" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9">Google Fonts CDN</text>
+<line x1="210" y1="775" x2="388" y2="775" stroke="rgba(255,255,255,.05)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#arr3)"/>
+
+<!-- DATA box right -->
+<rect x="950" y="960" width="185" height="200" rx="12" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+<text x="1042" y="984" text-anchor="middle" fill="#71717A" font-family="'Syne',sans-serif" font-size="11" font-weight="700">📋 JS DATA</text>
+<text x="1042" y="1005" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8.5">STACK[ ] · 12 tags</text>
+<text x="1042" y="1020" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8.5">SKILLS_DATA[ ] · 8</text>
+<text x="1042" y="1035" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8.5">PROJECTS_DATA[ ] · 4</text>
+<text x="1042" y="1050" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8.5">XP_DATA[ ] · 4</text>
+<text x="1042" y="1065" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8.5">TRUST_DATA[ ] · 4</text>
+<text x="1042" y="1086" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8">→ DOM via innerHTML</text>
+<text x="1042" y="1101" text-anchor="middle" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="8">forEach populate()</text>
+<line x1="950" y1="1060" x2="772" y2="1060" stroke="rgba(255,255,255,.05)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#arr3)"/>
+
+<!-- ══════════════════════════════
+     TITLE OVERLAY
+══════════════════════════════ -->
+<text x="40" y="60" fill="#EEEEF0" font-family="'Syne',sans-serif" font-size="22" font-weight="800" letter-spacing="-.03em" opacity=".9">D D PATEL</text>
+<text x="40" y="80" fill="#00E5CC" font-family="'Syne',sans-serif" font-size="12" font-weight="600" letter-spacing=".04em" opacity=".7">PORTFOLIO ARCHITECTURE</text>
+
+<text x="1120" y="60" text-anchor="end" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing=".08em">v1.0 · 2025</text>
+<text x="1120" y="76" text-anchor="end" fill="#3F3F46" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing=".08em">index.html · Single File</text>
+
+</svg>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#00E5CC"></div>Entry / Hero / Contact</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#4F6EF7"></div>Page Sections</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#FFD700"></div>JS Init Systems</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#71717A"></div>Config / Data</div>
+  <div class="leg-item"><div class="leg-dot" style="background:rgba(255,255,255,.3)"></div>Dependencies / Utilities</div>
+</div>
+
+<p class="footer-note" style="margin-top:2rem">D D Patel · Frontend Architect · Portfolio Architecture Diagram · 2025 · All sections populated via JS data arrays</p>
+
+</body>
+</html>
